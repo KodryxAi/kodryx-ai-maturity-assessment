@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useState } from "react";
+import { useLayoutEffect, useReducer, useState } from "react";
 import type { WizardAnswers } from "../../lib/types/assessment";
 import ProgressBar from "./ProgressBar";
 import StepRegistration from "./StepRegistration";
@@ -32,16 +32,18 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
 
   // 200ms fade + small slide on every step change, per brand motion rules
   // (no bounce, no large translate).
-  useEffect(() => {
+  useLayoutEffect(() => {
     setFadeIn(false);
     const id = requestAnimationFrame(() => setFadeIn(true));
     return () => cancelAnimationFrame(id);
   }, [state.stepIndex]);
 
-  // Re-evaluate validity whenever the step changes, since the previous
-  // step's validity callback does not apply to the newly rendered step
-  // until it reports in.
-  useEffect(() => {
+  // Reset validity on step change: clear error and let the new step
+  // re-report via its own useLayoutEffect. This effect uses useLayoutEffect
+  // so it fires BEFORE the step child's useLayoutEffect, which then
+  // overrides it back to the correct value — all in the same synchronous
+  // commit, before paint.
+  useLayoutEffect(() => {
     setIsCurrentStepValid(false);
     setError(null);
   }, [state.stepIndex]);
