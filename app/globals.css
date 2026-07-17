@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+}
+
+.kx-caption {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.kx-eyebrow {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.kx-metric {
+  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #c9a24d;
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.kx-divider-gold {
+  border: 0;
+  border-top: 2px solid #c9a24d;
+  width: 56px;
+  margin: 16px 0;
+}

@@ -1,0 +1,525 @@
+KODRYX AI Maturity Assessment™ (KAMA)
+
+Purpose:
+Evaluate an organization's AI readiness, identify business opportunities, quantify ROI, and deliver a phased transformation roadmap.
+
+Assessment Flow
+Registration
+      │
+      ▼
+Company Profile
+      │
+      ▼
+Business Discovery
+      │
+      ▼
+Department Assessment
+      │
+      ▼
+Technology Assessment
+      │
+      ▼
+AI Readiness Assessment
+      │
+      ▼
+Security & Governance
+      │
+      ▼
+Employee AI Readiness
+      │
+      ▼
+SWOT Analysis
+      │
+      ▼
+AI Opportunity Matrix
+      │
+      ▼
+ROI Calculator
+      │
+      ▼
+Maturity Score
+      │
+      ▼
+Roadmap
+      │
+      ▼
+Executive Report
+STEP 1 — Company Profile (5%)
+
+Collect basic information.
+
+Business Information
+Company Name
+Industry
+Number of Employees
+Annual Revenue
+Number of Branches
+Countries Served
+Years in Business
+Business Model
+B2B
+B2C
+SaaS
+Manufacturing
+Healthcare
+Education
+Retail
+Services
+Leadership Goals
+
+What are the top priorities?
+
+□ Increase Revenue
+
+□ Reduce Cost
+
+□ Improve Customer Experience
+
+□ Increase Productivity
+
+□ Digital Transformation
+
+□ AI Strategy
+
+STEP 2 — Business Process Assessment (20%)
+
+This is the most valuable section.
+
+Evaluate every department.
+
+Sales
+
+Questions
+
+How are leads generated?
+CRM?
+Proposal creation?
+Sales forecasting?
+Follow-up automation?
+Lead qualification?
+Call recording?
+Sales analytics?
+
+Score
+
+0–5
+
+Marketing
+
+Questions
+
+Social media
+Content generation
+SEO
+Paid Ads
+Email Marketing
+Campaign analytics
+AI content usage
+HR
+
+Questions
+
+Recruitment
+Resume screening
+Payroll
+Employee onboarding
+Policy management
+Performance reviews
+Finance
+
+Questions
+
+Invoice processing
+Expense approvals
+Financial reports
+Collections
+Budget planning
+Operations
+
+Questions
+
+SOP documentation
+Workflow automation
+Vendor management
+Inventory
+Approvals
+Compliance
+Customer Support
+
+Questions
+
+Helpdesk
+Email support
+Chatbot
+Knowledge Base
+SLA monitoring
+STEP 3 — Technology Assessment (15%)
+
+Current Software Stack
+
+CRM
+
+ERP
+
+HRMS
+
+Accounting
+
+Email
+
+Cloud
+
+Document Storage
+
+Communication
+
+Automation Tools
+
+API Availability
+
+Rate
+
+Legacy
+
+Basic
+
+Modern
+
+Enterprise
+
+STEP 4 — Data Readiness (10%)
+
+Assess
+
+Data Quality
+
+Data Ownership
+
+Master Data
+
+Data Security
+
+Data Accessibility
+
+Duplicate Data
+
+Cloud Storage
+
+Document Management
+
+Knowledge Base
+
+Structured vs Unstructured Data
+
+STEP 5 — AI Adoption (10%)
+
+Questions
+
+Does your company currently use:
+
+□ ChatGPT
+
+□ Claude
+
+□ Gemini
+
+□ Copilot
+
+□ Perplexity
+
+□ Cursor
+
+□ GitHub Copilot
+
+□ AI Meeting Assistant
+
+□ AI Chatbot
+
+□ AI Coding
+
+Frequency
+
+Never
+
+Weekly
+
+Daily
+
+Company-wide
+
+STEP 6 — Automation Assessment (10%)
+
+Evaluate
+
+Email automation
+
+Lead routing
+
+Invoices
+
+Purchase approvals
+
+Employee onboarding
+
+Reporting
+
+Notifications
+
+Scheduling
+
+Customer communication
+
+Automation Score
+
+0–100
+
+STEP 7 — AI Agent Readiness (10%)
+
+This becomes KODRYX's USP.
+
+Evaluate opportunities for AI Agents.
+
+Sales Agent
+
+Marketing Agent
+
+HR Agent
+
+Finance Agent
+
+Legal Agent
+
+Knowledge Agent
+
+Customer Support Agent
+
+Operations Agent
+
+Voice AI
+
+Document AI
+
+Vision AI
+
+STEP 8 — Security & Governance (5%)
+
+Assess
+
+MFA
+
+SSO
+
+Backups
+
+Data Encryption
+
+GDPR
+
+HIPAA
+
+ISO
+
+Audit Logs
+
+AI Governance
+
+Prompt Security
+
+Data Privacy
+
+STEP 9 — Employee Readiness (5%)
+
+Questions
+
+AI Skills
+
+Prompt Engineering
+
+Digital Literacy
+
+Training
+
+Change Readiness
+
+Leadership Support
+
+Innovation Culture
+
+STEP 10 — SWOT Analysis
+
+Automatically generate.
+
+Strengths
+
+Example
+
+Strong leadership support
+Cloud infrastructure
+Centralized CRM
+Good digital culture
+Weaknesses
+Manual reporting
+No AI policy
+Duplicate data
+No knowledge management
+Opportunities
+AI customer support
+Proposal automation
+Sales agent
+Marketing content automation
+AI HR assistant
+Threats
+Competitors adopting AI
+Rising operational costs
+Employee resistance
+Data privacy risks
+Vendor lock-in
+STEP 11 — AI Opportunity Matrix
+Initiative	Impact	Effort	ROI	Priority
+AI Chatbot	High	Low	High	⭐⭐⭐⭐⭐
+AI Sales Agent	High	Medium	High	⭐⭐⭐⭐⭐
+Invoice Automation	Medium	Low	Medium	⭐⭐⭐⭐
+HR Assistant	Medium	Medium	Medium	⭐⭐⭐
+STEP 12 — Risk Assessment
+
+Evaluate
+
+Technical Risk
+
+Business Risk
+
+Security Risk
+
+Operational Risk
+
+Compliance Risk
+
+Adoption Risk
+
+Budget Risk
+
+Each rated:
+
+Low
+
+Medium
+
+High
+
+STEP 13 — ROI Assessment
+
+Calculate
+
+Current Manual Hours
+
+↓
+
+Automation Hours
+
+↓
+
+Annual Savings
+
+↓
+
+Investment
+
+↓
+
+Payback Period
+
+↓
+
+3-Year ROI
+
+Example
+
+Annual Hours Saved
+
+2,480 Hours
+
+Cost Savings
+
+₹18.6 Lakhs
+
+Investment
+
+₹4.2 Lakhs
+
+ROI
+
+343%
+
+Payback
+
+4 Months
+STEP 14 — KODRYX AI Maturity Score
+Category	Weight	Score
+Business Process	20%	15
+Technology	15%	12
+Data	10%	8
+AI Adoption	10%	6
+Automation	10%	4
+AI Agents	10%	2
+Security	5%	4
+People	5%	4
+Leadership	10%	9
+Innovation	5%	3
+
+Total Score
+
+67/100
+
+Current Stage
+
+Level 3 — AI Automation
+
+STEP 15 — Transformation Roadmap
+Quick Wins (30 Days)
+AI Meeting Notes
+AI Email Assistant
+Prompt Library
+AI Policy
+Phase 2 (90 Days)
+CRM Automation
+HR Automation
+Finance Automation
+Marketing Automation
+Phase 3 (180 Days)
+AI Sales Agent
+AI Customer Support Agent
+AI Knowledge Base
+Executive Dashboard
+Phase 4 (12 Months)
+Enterprise AI Platform
+AI Governance
+Predictive Analytics
+Autonomous Business Processes
+Final Deliverables
+
+At the end of every assessment, the client receives:
+
+Executive Summary (2 pages)
+AI Maturity Scorecard
+Department-wise Scores
+Business Process Heatmap
+SWOT Analysis
+AI Opportunity Matrix
+Technology Gap Analysis
+Security & Compliance Review
+ROI Calculator
+30-60-90 Day Roadmap
+12-Month AI Transformation Strategy
+Budget Estimate
+Implementation Proposal
+My recommendation for KODRYX
+
+Don't build this first as a PowerPoint. Build it as a digital assessment platform.
+
+Phase 1: A web application with 120–150 structured questions, automatic scoring, and AI-generated recommendations.
+
+Phase 2: An internal consultant dashboard where your team reviews, refines, and approves the AI-generated insights before they are shared with the client.
+
+Phase 3: One-click generation of a professionally branded PowerPoint and PDF report, complete with maturity score, SWOT analysis, opportunity matrix, ROI estimates, department-wise findings, and a customized implementation roadmap.
+
+This approach turns the assessment into a scalable product rather than a one-off consulting exercise, allowing every KODRYX consultant to deliver a consistent, high-quality executive assessment.

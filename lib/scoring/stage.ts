@@ -1,0 +1,68 @@
+import type { Stage } from "../types/assessment";
+
+/**
+ * Maps a 0-100 total maturity score to one of the design spec's 6 named
+ * stage bands, each carrying a static 1-sentence "what this means" plus a
+ * 1-sentence "what's next" guidance hint (ENG-04). Both fields are fixed
+ * per-stage copy, not generated per-submission.
+ */
+export function getStage(totalScore: number): Stage {
+  if (totalScore <= 20) {
+    return {
+      level: 1,
+      label: "Level 1 — AI Unaware",
+      whatThisMeans:
+        "AI adoption has not yet begun in any meaningful way across the business — most work is still fully manual.",
+      whatsNext:
+        "Start with one high-friction manual process and pilot a single AI tool to build internal confidence.",
+    };
+  }
+  if (totalScore <= 40) {
+    return {
+      level: 2,
+      label: "Level 2 — AI Curious",
+      whatThisMeans:
+        "The organization is experimenting with individual AI tools, but adoption is scattered and not yet tied to a strategy.",
+      whatsNext:
+        "Formalize a short list of priority use cases and assign an owner to move from ad-hoc experimentation to a coordinated first project.",
+    };
+  }
+  if (totalScore <= 60) {
+    return {
+      level: 3,
+      label: "Level 3 — AI Exploring",
+      whatThisMeans:
+        "Multiple departments are using AI tools regularly and early automation is in place, but systems and data still aren't well connected.",
+      whatsNext:
+        "Invest in data readiness and systems integration so AI initiatives can scale beyond isolated pilots.",
+    };
+  }
+  if (totalScore <= 75) {
+    return {
+      level: 4,
+      label: "Level 4 — AI Automation",
+      whatThisMeans:
+        "Core processes are automated and AI is embedded in daily workflows across most departments.",
+      whatsNext:
+        "Shift focus toward AI agents that handle multi-step work end-to-end, not just point-solution automation.",
+    };
+  }
+  if (totalScore <= 90) {
+    return {
+      level: 5,
+      label: "Level 5 — AI Optimized",
+      whatThisMeans:
+        "AI is deeply integrated into operations, data, and decision-making, putting the business ahead of most industry peers.",
+      whatsNext:
+        "Formalize AI governance and start measuring compounding ROI to defend and extend the lead.",
+    };
+  }
+  return {
+    level: 6,
+    label: "Level 6 — AI Native",
+    whatThisMeans:
+      "AI is a default part of how the business operates, with agents and automation driving most routine work end-to-end.",
+    whatsNext:
+      "Focus on continuous optimization and explore emerging agent capabilities to stay ahead as the frontier moves.",
+  };
+}

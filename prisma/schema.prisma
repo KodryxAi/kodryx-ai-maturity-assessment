@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Assessment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // Lead capture
+  contactName  String
+  contactEmail String
+  contactPhone String?
+  companyName  String
+
+  // Raw answers per section (kept as JSON — flexible, avoids 100+ columns)
+  companyProfile    Json
+  departments       Json?
+  techStack         Json?
+  dataReadiness     Json?
+  aiAdoption        Json?
+  automation        Json?
+  agentInterest     Json?
+  security          Json?
+  employeeReadiness Json?
+
+  // Computed outputs
+  categoryScores    Json
+  totalScore        Int
+  stage             String
+  dataCompleteness  String?
+  benchmark         Json?
+  swot              Json?
+  opportunityMatrix Json?
+  risk              Json?
+  roadmap           Json?
+  roi               Json?
+  executiveSummary  String?
+}
