@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import type { CompanyProfileAnswers } from "../../lib/types/assessment";
 import {
   BUSINESS_MODEL_OPTIONS,
@@ -27,7 +27,7 @@ export default function StepCompanyProfile({
 }: StepCompanyProfileProps) {
   const [costManuallyEdited, setCostManuallyEdited] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const valid =
       values.industry.trim().length > 0 &&
       values.employeeBand.trim().length > 0 &&

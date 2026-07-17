@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import type { TechStackAnswers } from "../../lib/types/assessment";
 import { API_MATURITY_OPTIONS, SYSTEMS_OPTIONS } from "../../lib/constants/wizardOptions";
 
@@ -20,7 +20,7 @@ export default function StepTechnology({
 }: StepTechnologyProps) {
   // Systems selection is optional -- 0 systems selected is a legitimate
   // answer for a very early-stage company. Only API maturity is required.
-  useEffect(() => {
+  useLayoutEffect(() => {
     onValidityChange(values.apiMaturity.trim().length > 0);
   }, [values.apiMaturity, onValidityChange]);
 

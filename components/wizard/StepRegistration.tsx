@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import type { ContactInfo } from "../../lib/types/assessment";
 
 export interface StepRegistrationProps {
@@ -16,7 +16,7 @@ export default function StepRegistration({
   onChange,
   onValidityChange,
 }: StepRegistrationProps) {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const valid =
       values.contactName.trim().length > 0 &&
       EMAIL_PATTERN.test(values.contactEmail) &&

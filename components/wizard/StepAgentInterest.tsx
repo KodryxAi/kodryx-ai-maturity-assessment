@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import type { AgentInterestAnswers } from "../../lib/types/assessment";
 import { AGENT_TYPE_OPTIONS } from "../../lib/constants/wizardOptions";
 
@@ -16,7 +16,7 @@ export default function StepAgentInterest({
   onValidityChange,
 }: StepAgentInterestProps) {
   // No required field -- zero agent types selected is a legitimate answer.
-  useEffect(() => {
+  useLayoutEffect(() => {
     onValidityChange(true);
   }, [onValidityChange]);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import type { DataReadinessAnswers } from "../../lib/types/assessment";
 
 export interface StepDataReadinessProps {
@@ -23,7 +23,7 @@ export default function StepDataReadiness({
 }: StepDataReadinessProps) {
   // All 4 sliders always have a default value -- no blocking requirement,
   // matching StepBusinessProcess.tsx's rule.
-  useEffect(() => {
+  useLayoutEffect(() => {
     onValidityChange(true);
   }, [onValidityChange]);
 

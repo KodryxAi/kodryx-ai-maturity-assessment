@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import type { SecurityAnswers } from "../../lib/types/assessment";
 import { SECURITY_CHECKLIST_OPTIONS } from "../../lib/constants/wizardOptions";
 
@@ -17,7 +17,7 @@ export default function StepSecurity({
 }: StepSecurityProps) {
   // No required field -- zero controls in place is a legitimate, if
   // concerning, answer.
-  useEffect(() => {
+  useLayoutEffect(() => {
     onValidityChange(true);
   }, [onValidityChange]);
 

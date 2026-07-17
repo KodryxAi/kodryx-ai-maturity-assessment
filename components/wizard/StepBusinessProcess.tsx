@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import type { DepartmentAnswer, Departments } from "../../lib/types/assessment";
 import { DEPARTMENT_CONFIG } from "../../lib/constants/wizardOptions";
 
@@ -20,7 +20,7 @@ export default function StepBusinessProcess({
 }: StepBusinessProcessProps) {
   // A slider at 0 and zero checked capabilities are legitimate answers per
   // the design spec's 0-5 scale -- no blocking required-field check.
-  useEffect(() => {
+  useLayoutEffect(() => {
     onValidityChange(true);
   }, [onValidityChange]);
 

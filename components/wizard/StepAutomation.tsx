@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import type { AutomationAnswers } from "../../lib/types/assessment";
 import { AUTOMATION_PROCESS_OPTIONS } from "../../lib/constants/wizardOptions";
 
@@ -17,7 +17,7 @@ export default function StepAutomation({
 }: StepAutomationProps) {
   // No required field -- zero automated processes is a legitimate answer
   // for an early-stage company.
-  useEffect(() => {
+  useLayoutEffect(() => {
     onValidityChange(true);
   }, [onValidityChange]);
 

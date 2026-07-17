@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import type { EmployeeReadinessAnswers } from "../../lib/types/assessment";
 
 export interface StepEmployeeReadinessProps {
@@ -24,7 +24,7 @@ export default function StepEmployeeReadiness({
 }: StepEmployeeReadinessProps) {
   // All 5 sliders always have a default value -- no blocking requirement,
   // matching StepDataReadiness.tsx's rule.
-  useEffect(() => {
+  useLayoutEffect(() => {
     onValidityChange(true);
   }, [onValidityChange]);
 
