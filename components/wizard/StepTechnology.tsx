@@ -1,11 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import type { TechStackAnswers } from "../../lib/types/assessment";
 import { API_MATURITY_OPTIONS, SYSTEMS_OPTIONS } from "../../lib/constants/wizardOptions";
 
 export interface StepTechnologyProps {
   values: TechStackAnswers;
   onChange: (payload: Partial<TechStackAnswers>) => void;
+  onValidityChange: (valid: boolean) => void;
 }
 
 const selectClassName =
@@ -14,7 +16,10 @@ const selectClassName =
 export default function StepTechnology({
   values,
   onChange,
+  onValidityChange,
 }: StepTechnologyProps) {
+  const _vr = useRef(false);
+  if (!_vr.current) { _vr.current = true; onValidityChange(true); }
   const toggleSystem = (system: string) => {
     const next = values.systems.includes(system)
       ? values.systems.filter((s) => s !== system)

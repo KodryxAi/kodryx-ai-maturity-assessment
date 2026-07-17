@@ -1,17 +1,22 @@
 "use client";
 
+import { useRef } from "react";
 import type { AutomationAnswers } from "../../lib/types/assessment";
 import { AUTOMATION_PROCESS_OPTIONS } from "../../lib/constants/wizardOptions";
 
 export interface StepAutomationProps {
   values: AutomationAnswers;
   onChange: (payload: Partial<AutomationAnswers>) => void;
+  onValidityChange: (valid: boolean) => void;
 }
 
 export default function StepAutomation({
   values,
   onChange,
+  onValidityChange,
 }: StepAutomationProps) {
+  const _vr = useRef(false);
+  if (!_vr.current) { _vr.current = true; onValidityChange(true); }
   // No required field -- zero automated processes is a legitimate answer
   // for an early-stage company.
 

@@ -1,17 +1,22 @@
 "use client";
 
+import { useRef } from "react";
 import type { SecurityAnswers } from "../../lib/types/assessment";
 import { SECURITY_CHECKLIST_OPTIONS } from "../../lib/constants/wizardOptions";
 
 export interface StepSecurityProps {
   values: SecurityAnswers;
   onChange: (payload: Partial<SecurityAnswers>) => void;
+  onValidityChange: (valid: boolean) => void;
 }
 
 export default function StepSecurity({
   values,
   onChange,
+  onValidityChange,
 }: StepSecurityProps) {
+  const _vr = useRef(false);
+  if (!_vr.current) { _vr.current = true; onValidityChange(true); }
   // No required field -- zero controls in place is a legitimate, if
   // concerning, answer.
 

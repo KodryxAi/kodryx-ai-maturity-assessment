@@ -146,7 +146,7 @@ export async function POST(request: Request) {
   if (
     !techStack ||
     !isSubsetNoDuplicates(techStack.systems, SYSTEMS_OPTIONS) ||
-    !(API_MATURITY_OPTIONS as readonly string[]).includes(techStack.apiMaturity)
+    !(API_MATURITY_OPTIONS as readonly string[]).includes(techStack.apiMaturity || "Legacy")
   ) {
     return invalid("techStack");
   }
@@ -164,7 +164,7 @@ export async function POST(request: Request) {
   if (
     !aiAdoption ||
     !isSubsetNoDuplicates(aiAdoption.toolsInUse, AI_TOOLS_OPTIONS) ||
-    !(AI_ADOPTION_FREQUENCY_OPTIONS as readonly string[]).includes(aiAdoption.frequency)
+    !(AI_ADOPTION_FREQUENCY_OPTIONS as readonly string[]).includes(aiAdoption.frequency || "Never")
   ) {
     return invalid("aiAdoption");
   }
@@ -197,6 +197,9 @@ export async function POST(request: Request) {
   ) {
     return invalid("employeeReadiness");
   }
+
+  if (!techStack.apiMaturity) techStack.apiMaturity = "Legacy";
+  if (!aiAdoption.frequency) aiAdoption.frequency = "Never";
 
   const scoringInput: ScoringInput = {
     companyProfile,

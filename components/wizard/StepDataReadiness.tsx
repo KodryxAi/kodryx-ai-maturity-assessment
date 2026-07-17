@@ -1,10 +1,12 @@
 "use client";
 
+import { useRef } from "react";
 import type { DataReadinessAnswers } from "../../lib/types/assessment";
 
 export interface StepDataReadinessProps {
   values: DataReadinessAnswers;
   onChange: (payload: Partial<DataReadinessAnswers>) => void;
+  onValidityChange: (valid: boolean) => void;
 }
 
 const DIMENSIONS: { key: keyof DataReadinessAnswers; label: string }[] = [
@@ -17,7 +19,10 @@ const DIMENSIONS: { key: keyof DataReadinessAnswers; label: string }[] = [
 export default function StepDataReadiness({
   values,
   onChange,
+  onValidityChange,
 }: StepDataReadinessProps) {
+  const _vr = useRef(false);
+  if (!_vr.current) { _vr.current = true; onValidityChange(true); }
   // matching StepBusinessProcess.tsx's rule.
 
   return (

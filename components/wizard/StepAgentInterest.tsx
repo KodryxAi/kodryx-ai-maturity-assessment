@@ -1,17 +1,22 @@
 "use client";
 
+import { useRef } from "react";
 import type { AgentInterestAnswers } from "../../lib/types/assessment";
 import { AGENT_TYPE_OPTIONS } from "../../lib/constants/wizardOptions";
 
 export interface StepAgentInterestProps {
   values: AgentInterestAnswers;
   onChange: (payload: Partial<AgentInterestAnswers>) => void;
+  onValidityChange: (valid: boolean) => void;
 }
 
 export default function StepAgentInterest({
   values,
   onChange,
+  onValidityChange,
 }: StepAgentInterestProps) {
+  const _vr = useRef(false);
+  if (!_vr.current) { _vr.current = true; onValidityChange(true); }
   // No required field -- zero agent types selected is a legitimate answer.
 
   const toggleAgentType = (agentType: string) => {

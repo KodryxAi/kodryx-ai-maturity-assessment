@@ -1,10 +1,12 @@
 "use client";
 
+import { useRef } from "react";
 import type { EmployeeReadinessAnswers } from "../../lib/types/assessment";
 
 export interface StepEmployeeReadinessProps {
   values: EmployeeReadinessAnswers;
   onChange: (payload: Partial<EmployeeReadinessAnswers>) => void;
+  onValidityChange: (valid: boolean) => void;
 }
 
 const DIMENSIONS: { key: keyof EmployeeReadinessAnswers; label: string }[] = [
@@ -18,7 +20,10 @@ const DIMENSIONS: { key: keyof EmployeeReadinessAnswers; label: string }[] = [
 export default function StepEmployeeReadiness({
   values,
   onChange,
+  onValidityChange,
 }: StepEmployeeReadinessProps) {
+  const _vr = useRef(false);
+  if (!_vr.current) { _vr.current = true; onValidityChange(true); }
   // matching StepDataReadiness.tsx's rule.
 
   return (

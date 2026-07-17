@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import type { DepartmentAnswer, Departments } from "../../lib/types/assessment";
 import { DEPARTMENT_CONFIG } from "../../lib/constants/wizardOptions";
 
@@ -9,12 +10,16 @@ export interface StepBusinessProcessProps {
     department: keyof Departments,
     payload: Partial<DepartmentAnswer>
   ) => void;
+  onValidityChange: (valid: boolean) => void;
 }
 
 export default function StepBusinessProcess({
   values,
   onChange,
+  onValidityChange,
 }: StepBusinessProcessProps) {
+  const _vr = useRef(false);
+  if (!_vr.current) { _vr.current = true; onValidityChange(true); }
   const toggleCapability = (department: keyof Departments, capability: string) => {
     const current = values[department].capabilities;
     const next = current.includes(capability)

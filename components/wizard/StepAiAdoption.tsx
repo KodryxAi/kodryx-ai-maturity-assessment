@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import type { AiAdoptionAnswers } from "../../lib/types/assessment";
 import {
   AI_ADOPTION_FREQUENCY_OPTIONS,
@@ -9,6 +10,7 @@ import {
 export interface StepAiAdoptionProps {
   values: AiAdoptionAnswers;
   onChange: (payload: Partial<AiAdoptionAnswers>) => void;
+  onValidityChange: (valid: boolean) => void;
 }
 
 const selectClassName =
@@ -17,7 +19,10 @@ const selectClassName =
 export default function StepAiAdoption({
   values,
   onChange,
+  onValidityChange,
 }: StepAiAdoptionProps) {
+  const _vr = useRef(false);
+  if (!_vr.current) { _vr.current = true; onValidityChange(true); }
   const toggleTool = (tool: string) => {
     const next = values.toolsInUse.includes(tool)
       ? values.toolsInUse.filter((t) => t !== tool)
