@@ -26,24 +26,23 @@ export interface WizardShellProps {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function isStepValid(stepIndex: number, answers: WizardAnswers): boolean {
-  switch (stepIndex) {
-    case 0:
-      return (
-        answers.contact.contactName.trim().length > 0 &&
-        EMAIL_RE.test(answers.contact.contactEmail) &&
-        answers.contact.companyName.trim().length > 0
-      );
-    case 1:
-      return (
-        (answers.companyProfile.industry as string).length > 0 &&
-        (answers.companyProfile.employeeBand as string).length > 0 &&
-        (answers.companyProfile.revenueBand as string).length > 0 &&
-        (answers.companyProfile.businessModel as string).length > 0 &&
-        answers.companyProfile.blendedHourlyCost > 0
-      );
-    default:
-      return true;
+  if (stepIndex === 0) {
+    return (
+      answers.contact.contactName.trim().length > 0 &&
+      EMAIL_RE.test(answers.contact.contactEmail) &&
+      answers.contact.companyName.trim().length > 0
+    );
   }
+  if (stepIndex === 1) {
+    return (
+      answers.companyProfile.industry.length > 0 &&
+      answers.companyProfile.employeeBand.length > 0 &&
+      answers.companyProfile.revenueBand.length > 0 &&
+      answers.companyProfile.businessModel.length > 0 &&
+      answers.companyProfile.blendedHourlyCost > 0
+    );
+  }
+  return true;
 }
 
 export default function WizardShell({ onSubmit }: WizardShellProps) {
@@ -52,31 +51,26 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
   const [error, setError] = useState<string | null>(null);
   const [fadeKey, setFadeKey] = useState(0);
 
-  const isCurrentStepValid = isStepValid(state.stepIndex, state.answers);
-  const isLastStep = state.stepIndex === TOTAL_WIZARD_STEPS - 1;
+  const stepIndex = state.stepIndex;
+  const valid = isStepValid(stepIndex, state.answers);
+  const last = stepIndex === TOTAL_WIZARD_STEPS - 1;
 
-  const goToStep = (nextIndex: number) => {
+  function goNext() {
+    if (!valid) return;
     setError(null);
     setFadeKey((k) => k + 1);
-    if (nextIndex > state.stepIndex) {
-      dispatch({ type: "NEXT" });
-    } else {
-      dispatch({ type: "BACK" });
-    }
-  };
+    dispatch({ type: "NEXT" });
+  }
 
-  const handleNext = () => {
-    if (!isCurrentStepValid) return;
-    goToStep(state.stepIndex + 1);
-  };
+  function goBack() {
+    if (stepIndex <= 0) return;
+    setError(null);
+    setFadeKey((k) => k + 1);
+    dispatch({ type: "BACK" });
+  }
 
-  const handleBack = () => {
-    if (state.stepIndex <= 0) return;
-    goToStep(state.stepIndex - 1);
-  };
-
-  const handleSubmit = async () => {
-    if (!isCurrentStepValid || submitting) return;
+  async function doSubmit() {
+    if (!valid || submitting) return;
     setSubmitting(true);
     setError(null);
     try {
@@ -84,102 +78,105 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
       if (!result.ok) {
         setError(result.error);
       }
+    } catch {
+      setError("Network error — please try again.");
     } finally {
       setSubmitting(false);
     }
-  };
+  }
 
-  const renderStep = () => {
-    const noopOnChange = () => {};
-    switch (state.stepIndex) {
-      case 0:
-        return (
-          <StepRegistration
-            values={state.answers.contact}
-            onChange={(payload) => dispatch({ type: "UPDATE_CONTACT", payload })}
-          />
-        );
-      case 1:
-        return (
-          <StepCompanyProfile
-            values={state.answers.companyProfile}
-            onChange={(payload) =>
-              dispatch({ type: "UPDATE_COMPANY_PROFILE", payload })
-            }
-          />
-        );
-      case 2:
-        return (
-          <StepBusinessProcess
-            values={state.answers.departments}
-            onChange={(department, payload) =>
-              dispatch({ type: "UPDATE_DEPARTMENT", department, payload })
-            }
-          />
-        );
-      case 3:
-        return (
-          <StepTechnology
-            values={state.answers.techStack}
-            onChange={(payload) => dispatch({ type: "UPDATE_TECH_STACK", payload })}
-          />
-        );
-      case 4:
-        return (
-          <StepDataReadiness
-            values={state.answers.dataReadiness}
-            onChange={(payload) => dispatch({ type: "UPDATE_DATA_READINESS", payload })}
-          />
-        );
-      case 5:
-        return (
-          <StepAiAdoption
-            values={state.answers.aiAdoption}
-            onChange={(payload) => dispatch({ type: "UPDATE_AI_ADOPTION", payload })}
-          />
-        );
-      case 6:
-        return (
-          <StepAutomation
-            values={state.answers.automation}
-            onChange={(payload) => dispatch({ type: "UPDATE_AUTOMATION", payload })}
-          />
-        );
-      case 7:
-        return (
-          <StepAgentInterest
-            values={state.answers.agentInterest}
-            onChange={(payload) => dispatch({ type: "UPDATE_AGENT_INTEREST", payload })}
-          />
-        );
-      case 8:
-        return (
-          <StepSecurity
-            values={state.answers.security}
-            onChange={(payload) => dispatch({ type: "UPDATE_SECURITY", payload })}
-          />
-        );
-      case 9:
-        return (
-          <StepEmployeeReadiness
-            values={state.answers.employeeReadiness}
-            onChange={(payload) =>
-              dispatch({ type: "UPDATE_EMPLOYEE_READINESS", payload })
-            }
-          />
-        );
-    }
-  };
+  let stepContent: React.ReactNode;
+  switch (stepIndex) {
+    case 0:
+      stepContent = (
+        <StepRegistration
+          values={state.answers.contact}
+          onChange={(payload) => dispatch({ type: "UPDATE_CONTACT", payload })}
+        />
+      );
+      break;
+    case 1:
+      stepContent = (
+        <StepCompanyProfile
+          values={state.answers.companyProfile}
+          onChange={(payload) => dispatch({ type: "UPDATE_COMPANY_PROFILE", payload })}
+        />
+      );
+      break;
+    case 2:
+      stepContent = (
+        <StepBusinessProcess
+          values={state.answers.departments}
+          onChange={(department, payload) => dispatch({ type: "UPDATE_DEPARTMENT", department, payload })}
+        />
+      );
+      break;
+    case 3:
+      stepContent = (
+        <StepTechnology
+          values={state.answers.techStack}
+          onChange={(payload) => dispatch({ type: "UPDATE_TECH_STACK", payload })}
+        />
+      );
+      break;
+    case 4:
+      stepContent = (
+        <StepDataReadiness
+          values={state.answers.dataReadiness}
+          onChange={(payload) => dispatch({ type: "UPDATE_DATA_READINESS", payload })}
+        />
+      );
+      break;
+    case 5:
+      stepContent = (
+        <StepAiAdoption
+          values={state.answers.aiAdoption}
+          onChange={(payload) => dispatch({ type: "UPDATE_AI_ADOPTION", payload })}
+        />
+      );
+      break;
+    case 6:
+      stepContent = (
+        <StepAutomation
+          values={state.answers.automation}
+          onChange={(payload) => dispatch({ type: "UPDATE_AUTOMATION", payload })}
+        />
+      );
+      break;
+    case 7:
+      stepContent = (
+        <StepAgentInterest
+          values={state.answers.agentInterest}
+          onChange={(payload) => dispatch({ type: "UPDATE_AGENT_INTEREST", payload })}
+        />
+      );
+      break;
+    case 8:
+      stepContent = (
+        <StepSecurity
+          values={state.answers.security}
+          onChange={(payload) => dispatch({ type: "UPDATE_SECURITY", payload })}
+        />
+      );
+      break;
+    case 9:
+      stepContent = (
+        <StepEmployeeReadiness
+          values={state.answers.employeeReadiness}
+          onChange={(payload) => dispatch({ type: "UPDATE_EMPLOYEE_READINESS", payload })}
+        />
+      );
+      break;
+    default:
+      stepContent = null;
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-[560px] flex-col gap-8 px-6 py-16">
-      <ProgressBar stepIndex={state.stepIndex} totalSteps={TOTAL_WIZARD_STEPS} />
+      <ProgressBar stepIndex={stepIndex} totalSteps={TOTAL_WIZARD_STEPS} />
 
-      <div
-        key={fadeKey}
-        className="animate-fade-in-up"
-      >
-        {renderStep()}
+      <div key={fadeKey} className="animate-fade-in-up">
+        {stepContent}
       </div>
 
       {error ? <p className="kx-caption text-red-600">{error}</p> : null}
@@ -187,19 +184,19 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
       <div className="flex items-center justify-between">
         <button
           type="button"
-          onClick={handleBack}
-          disabled={state.stepIndex === 0}
+          onClick={goBack}
+          disabled={stepIndex === 0}
           className="rounded-md border border-kx-grey-200 px-6 py-3 text-kx-navy transition-colors duration-200 hover:border-kx-gold disabled:cursor-not-allowed disabled:opacity-40"
         >
           Back
         </button>
         <button
           type="button"
-          onClick={isLastStep ? handleSubmit : handleNext}
-          disabled={!isCurrentStepValid || submitting}
+          onClick={last ? doSubmit : goNext}
+          disabled={!valid || submitting}
           className="rounded-md bg-kx-navy px-6 py-3 text-white transition-colors duration-200 hover:bg-kx-navy/90 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {isLastStep ? (submitting ? "Submitting..." : "Submit") : "Next"}
+          {last ? (submitting ? "Submitting..." : "Submit") : "Next"}
         </button>
       </div>
     </div>
