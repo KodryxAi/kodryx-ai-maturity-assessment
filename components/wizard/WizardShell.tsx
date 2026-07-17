@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import type { WizardAnswers } from "../../lib/types/assessment";
 import ProgressBar from "./ProgressBar";
 import StepRegistration from "./StepRegistration";
@@ -23,36 +23,56 @@ export interface WizardShellProps {
   onSubmit: (answers: WizardAnswers) => Promise<WizardSubmitResult>;
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function isStepValid(stepIndex: number, answers: WizardAnswers): boolean {
+  switch (stepIndex) {
+    case 0:
+      return (
+        answers.contact.contactName.trim().length > 0 &&
+        EMAIL_RE.test(answers.contact.contactEmail) &&
+        answers.contact.companyName.trim().length > 0
+      );
+    case 1:
+      return (
+        (answers.companyProfile.industry as string).length > 0 &&
+        (answers.companyProfile.employeeBand as string).length > 0 &&
+        (answers.companyProfile.revenueBand as string).length > 0 &&
+        (answers.companyProfile.businessModel as string).length > 0 &&
+        answers.companyProfile.blendedHourlyCost > 0
+      );
+    default:
+      return true;
+  }
+}
+
 export default function WizardShell({ onSubmit }: WizardShellProps) {
   const [state, dispatch] = useReducer(wizardReducer, initialWizardState);
-  const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fadeIn, setFadeIn] = useState(false);
+  const [fadeKey, setFadeKey] = useState(0);
 
-  // 200ms fade + small slide on every step change, per brand motion rules
-  // (no bounce, no large translate).
-  useLayoutEffect(() => {
-    setFadeIn(false);
-    const id = requestAnimationFrame(() => setFadeIn(true));
-    return () => cancelAnimationFrame(id);
-  }, [state.stepIndex]);
+  const isCurrentStepValid = isStepValid(state.stepIndex, state.answers);
+  const isLastStep = state.stepIndex === TOTAL_WIZARD_STEPS - 1;
 
-  // Reset validity on step change: clear error and let the new step
-  // re-report via its own useLayoutEffect. This effect uses useLayoutEffect
-  // so it fires BEFORE the step child's useLayoutEffect, which then
-  // overrides it back to the correct value — all in the same synchronous
-  // commit, before paint.
-  useLayoutEffect(() => {
-    setIsCurrentStepValid(false);
+  const goToStep = (nextIndex: number) => {
     setError(null);
-  }, [state.stepIndex]);
-
-  const handleBack = () => dispatch({ type: "BACK" });
+    setFadeKey((k) => k + 1);
+    if (nextIndex > state.stepIndex) {
+      dispatch({ type: "NEXT" });
+    } else {
+      dispatch({ type: "BACK" });
+    }
+  };
 
   const handleNext = () => {
     if (!isCurrentStepValid) return;
-    dispatch({ type: "NEXT" });
+    goToStep(state.stepIndex + 1);
+  };
+
+  const handleBack = () => {
+    if (state.stepIndex <= 0) return;
+    goToStep(state.stepIndex - 1);
   };
 
   const handleSubmit = async () => {
@@ -64,23 +84,19 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
       if (!result.ok) {
         setError(result.error);
       }
-      // On success, this plan does not navigate — the real onSubmit
-      // implementation (Plan 01-04) owns the redirect once wired.
     } finally {
       setSubmitting(false);
     }
   };
 
-  const isLastStep = state.stepIndex === TOTAL_WIZARD_STEPS - 1;
-
   const renderStep = () => {
+    const noopOnChange = () => {};
     switch (state.stepIndex) {
       case 0:
         return (
           <StepRegistration
             values={state.answers.contact}
             onChange={(payload) => dispatch({ type: "UPDATE_CONTACT", payload })}
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 1:
@@ -90,7 +106,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
             onChange={(payload) =>
               dispatch({ type: "UPDATE_COMPANY_PROFILE", payload })
             }
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 2:
@@ -100,7 +115,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
             onChange={(department, payload) =>
               dispatch({ type: "UPDATE_DEPARTMENT", department, payload })
             }
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 3:
@@ -108,7 +122,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
           <StepTechnology
             values={state.answers.techStack}
             onChange={(payload) => dispatch({ type: "UPDATE_TECH_STACK", payload })}
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 4:
@@ -116,7 +129,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
           <StepDataReadiness
             values={state.answers.dataReadiness}
             onChange={(payload) => dispatch({ type: "UPDATE_DATA_READINESS", payload })}
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 5:
@@ -124,7 +136,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
           <StepAiAdoption
             values={state.answers.aiAdoption}
             onChange={(payload) => dispatch({ type: "UPDATE_AI_ADOPTION", payload })}
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 6:
@@ -132,7 +143,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
           <StepAutomation
             values={state.answers.automation}
             onChange={(payload) => dispatch({ type: "UPDATE_AUTOMATION", payload })}
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 7:
@@ -140,7 +150,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
           <StepAgentInterest
             values={state.answers.agentInterest}
             onChange={(payload) => dispatch({ type: "UPDATE_AGENT_INTEREST", payload })}
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 8:
@@ -148,7 +157,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
           <StepSecurity
             values={state.answers.security}
             onChange={(payload) => dispatch({ type: "UPDATE_SECURITY", payload })}
-            onValidityChange={setIsCurrentStepValid}
           />
         );
       case 9:
@@ -158,7 +166,6 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
             onChange={(payload) =>
               dispatch({ type: "UPDATE_EMPLOYEE_READINESS", payload })
             }
-            onValidityChange={setIsCurrentStepValid}
           />
         );
     }
@@ -169,10 +176,8 @@ export default function WizardShell({ onSubmit }: WizardShellProps) {
       <ProgressBar stepIndex={state.stepIndex} totalSteps={TOTAL_WIZARD_STEPS} />
 
       <div
-        key={state.stepIndex}
-        className={`transition-all duration-200 ease-[cubic-bezier(0.2,0,0,1)] ${
-          fadeIn ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"
-        }`}
+        key={fadeKey}
+        className="animate-fade-in-up"
       >
         {renderStep()}
       </div>

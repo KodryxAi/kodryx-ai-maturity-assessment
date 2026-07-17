@@ -1,25 +1,19 @@
 "use client";
 
-import { useLayoutEffect } from "react";
 import type { SecurityAnswers } from "../../lib/types/assessment";
 import { SECURITY_CHECKLIST_OPTIONS } from "../../lib/constants/wizardOptions";
 
 export interface StepSecurityProps {
   values: SecurityAnswers;
   onChange: (payload: Partial<SecurityAnswers>) => void;
-  onValidityChange: (valid: boolean) => void;
 }
 
 export default function StepSecurity({
   values,
   onChange,
-  onValidityChange,
 }: StepSecurityProps) {
   // No required field -- zero controls in place is a legitimate, if
   // concerning, answer.
-  useLayoutEffect(() => {
-    onValidityChange(true);
-  }, [onValidityChange]);
 
   const toggleControl = (control: string) => {
     const next = values.checklist.includes(control)

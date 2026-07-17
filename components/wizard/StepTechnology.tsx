@@ -1,13 +1,11 @@
 "use client";
 
-import { useLayoutEffect } from "react";
 import type { TechStackAnswers } from "../../lib/types/assessment";
 import { API_MATURITY_OPTIONS, SYSTEMS_OPTIONS } from "../../lib/constants/wizardOptions";
 
 export interface StepTechnologyProps {
   values: TechStackAnswers;
   onChange: (payload: Partial<TechStackAnswers>) => void;
-  onValidityChange: (valid: boolean) => void;
 }
 
 const selectClassName =
@@ -16,14 +14,7 @@ const selectClassName =
 export default function StepTechnology({
   values,
   onChange,
-  onValidityChange,
 }: StepTechnologyProps) {
-  // Systems selection is optional -- 0 systems selected is a legitimate
-  // answer for a very early-stage company. Only API maturity is required.
-  useLayoutEffect(() => {
-    onValidityChange(values.apiMaturity.trim().length > 0);
-  }, [values.apiMaturity, onValidityChange]);
-
   const toggleSystem = (system: string) => {
     const next = values.systems.includes(system)
       ? values.systems.filter((s) => s !== system)

@@ -1,29 +1,16 @@
 "use client";
 
-import { useLayoutEffect } from "react";
 import type { ContactInfo } from "../../lib/types/assessment";
 
 export interface StepRegistrationProps {
   values: ContactInfo;
   onChange: (payload: Partial<ContactInfo>) => void;
-  onValidityChange: (valid: boolean) => void;
 }
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function StepRegistration({
   values,
   onChange,
-  onValidityChange,
 }: StepRegistrationProps) {
-  useLayoutEffect(() => {
-    const valid =
-      values.contactName.trim().length > 0 &&
-      EMAIL_PATTERN.test(values.contactEmail) &&
-      values.companyName.trim().length > 0;
-    onValidityChange(valid);
-  }, [values.contactName, values.contactEmail, values.companyName, onValidityChange]);
-
   return (
     <div className="flex flex-col gap-6">
       <div>

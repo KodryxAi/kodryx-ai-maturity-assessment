@@ -1,25 +1,19 @@
 "use client";
 
-import { useLayoutEffect } from "react";
 import type { AutomationAnswers } from "../../lib/types/assessment";
 import { AUTOMATION_PROCESS_OPTIONS } from "../../lib/constants/wizardOptions";
 
 export interface StepAutomationProps {
   values: AutomationAnswers;
   onChange: (payload: Partial<AutomationAnswers>) => void;
-  onValidityChange: (valid: boolean) => void;
 }
 
 export default function StepAutomation({
   values,
   onChange,
-  onValidityChange,
 }: StepAutomationProps) {
   // No required field -- zero automated processes is a legitimate answer
   // for an early-stage company.
-  useLayoutEffect(() => {
-    onValidityChange(true);
-  }, [onValidityChange]);
 
   const toggleProcess = (process: string) => {
     const next = values.processesAutomated.includes(process)

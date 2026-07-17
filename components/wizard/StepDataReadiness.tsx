@@ -1,12 +1,10 @@
 "use client";
 
-import { useLayoutEffect } from "react";
 import type { DataReadinessAnswers } from "../../lib/types/assessment";
 
 export interface StepDataReadinessProps {
   values: DataReadinessAnswers;
   onChange: (payload: Partial<DataReadinessAnswers>) => void;
-  onValidityChange: (valid: boolean) => void;
 }
 
 const DIMENSIONS: { key: keyof DataReadinessAnswers; label: string }[] = [
@@ -19,13 +17,8 @@ const DIMENSIONS: { key: keyof DataReadinessAnswers; label: string }[] = [
 export default function StepDataReadiness({
   values,
   onChange,
-  onValidityChange,
 }: StepDataReadinessProps) {
-  // All 4 sliders always have a default value -- no blocking requirement,
   // matching StepBusinessProcess.tsx's rule.
-  useLayoutEffect(() => {
-    onValidityChange(true);
-  }, [onValidityChange]);
 
   return (
     <div className="flex flex-col gap-6">

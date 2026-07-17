@@ -1,6 +1,5 @@
 "use client";
 
-import { useLayoutEffect } from "react";
 import type { AiAdoptionAnswers } from "../../lib/types/assessment";
 import {
   AI_ADOPTION_FREQUENCY_OPTIONS,
@@ -10,7 +9,6 @@ import {
 export interface StepAiAdoptionProps {
   values: AiAdoptionAnswers;
   onChange: (payload: Partial<AiAdoptionAnswers>) => void;
-  onValidityChange: (valid: boolean) => void;
 }
 
 const selectClassName =
@@ -19,15 +17,7 @@ const selectClassName =
 export default function StepAiAdoption({
   values,
   onChange,
-  onValidityChange,
 }: StepAiAdoptionProps) {
-  // Tools selection is optional -- 0 tools selected is a legitimate answer.
-  // "Never" is itself a valid, selectable frequency option, so the
-  // requirement is only that some option was chosen.
-  useLayoutEffect(() => {
-    onValidityChange(values.frequency.trim().length > 0);
-  }, [values.frequency, onValidityChange]);
-
   const toggleTool = (tool: string) => {
     const next = values.toolsInUse.includes(tool)
       ? values.toolsInUse.filter((t) => t !== tool)

@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import type { CompanyProfileAnswers } from "../../lib/types/assessment";
 import {
   BUSINESS_MODEL_OPTIONS,
@@ -14,7 +14,6 @@ import {
 export interface StepCompanyProfileProps {
   values: CompanyProfileAnswers;
   onChange: (payload: Partial<CompanyProfileAnswers>) => void;
-  onValidityChange: (valid: boolean) => void;
 }
 
 const selectClassName =
@@ -23,26 +22,8 @@ const selectClassName =
 export default function StepCompanyProfile({
   values,
   onChange,
-  onValidityChange,
 }: StepCompanyProfileProps) {
   const [costManuallyEdited, setCostManuallyEdited] = useState(false);
-
-  useLayoutEffect(() => {
-    const valid =
-      values.industry.trim().length > 0 &&
-      values.employeeBand.trim().length > 0 &&
-      values.revenueBand.trim().length > 0 &&
-      values.businessModel.trim().length > 0 &&
-      values.blendedHourlyCost > 0;
-    onValidityChange(valid);
-  }, [
-    values.industry,
-    values.employeeBand,
-    values.revenueBand,
-    values.businessModel,
-    values.blendedHourlyCost,
-    onValidityChange,
-  ]);
 
   const handleIndustryChange = (industry: string) => {
     if (!costManuallyEdited) {
